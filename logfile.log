@@ -1,0 +1,107 @@
+2022-09-15 15:07:00,648 [WARNING] Goodbye!
+2022-09-15 15:10:45,892 [WARNING] Goodbye!
+2022-09-15 15:12:30,733 [WARNING] Goodbye!
+2022-09-15 15:13:14,127 [WARNING] Goodbye!
+2022-09-15 15:13:21,351 [WARNING] Goodbye!
+2022-09-15 15:15:00,587 [WARNING] Goodbye!
+2022-09-15 15:15:31,715 [WARNING] Goodbye!
+2022-09-15 15:20:42,854 [WARNING] Goodbye!
+2022-09-15 15:20:57,220 [ERROR] Task exception was never retrieved
+future: <Task finished name='Task-12' coro=<Dispatcher._process_polling_updates() done, defined at A:\DEV\test_tasks\kerka_bot\venv\lib\site-packages\aiogram\dispatcher\dispatcher.py:407> exception=ValueError('Ой ой ой')>
+Traceback (most recent call last):
+  File "A:\DEV\test_tasks\kerka_bot\venv\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 415, in _process_polling_updates
+    for responses in itertools.chain.from_iterable(await self.process_updates(updates, fast)):
+  File "A:\DEV\test_tasks\kerka_bot\venv\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 235, in process_updates
+    return await asyncio.gather(*tasks)
+  File "A:\DEV\test_tasks\kerka_bot\venv\lib\site-packages\aiogram\dispatcher\handler.py", line 116, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "A:\DEV\test_tasks\kerka_bot\venv\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 256, in process_update
+    return await self.message_handlers.notify(update.message)
+  File "A:\DEV\test_tasks\kerka_bot\venv\lib\site-packages\aiogram\dispatcher\handler.py", line 116, in notify
+    response = await handler_obj.handler(*args, **partial_data)
+  File "A:\DEV\test_tasks\kerka_bot\handlers\info.py", line 15, in send_welcome
+    raise ValueError('Ой ой ой')
+ValueError: Ой ой ой
+2022-09-15 15:25:17,280 [WARNING] Goodbye!
+2022-09-15 15:25:26,523 [WARNING] Goodbye!
+2022-09-15 15:29:33,294 [WARNING] Goodbye!
+2022-09-15 15:29:44,133 [WARNING] Goodbye!
+2022-09-15 15:30:48,070 [WARNING] Shutting down..
+2022-09-15 15:30:49,095 [WARNING] Goodbye!
+2022-09-15 15:31:04,762 [WARNING] Shutting down..
+2022-09-15 15:31:05,062 [WARNING] Goodbye!
+2022-09-15 15:31:16,519 [WARNING] Shutting down..
+2022-09-15 15:31:16,857 [WARNING] Goodbye!
+2022-09-15 17:03:50,029 [ERROR] Error test
+2022-09-15 18:10:02,310 [ERROR] Cause exception while getting updates.
+Traceback (most recent call last):
+  File "A:\DEV\test_tasks\kerka_bot\venv\lib\site-packages\aiogram\bot\api.py", line 139, in make_request
+    async with session.post(url, data=req, **kwargs) as response:
+  File "A:\DEV\test_tasks\kerka_bot\venv\lib\site-packages\aiohttp\client.py", line 1138, in __aenter__
+    self._resp = await self._coro
+  File "A:\DEV\test_tasks\kerka_bot\venv\lib\site-packages\aiohttp\client.py", line 559, in _request
+    await resp.start(conn)
+  File "A:\DEV\test_tasks\kerka_bot\venv\lib\site-packages\aiohttp\client_reqrep.py", line 898, in start
+    message, payload = await protocol.read()  # type: ignore[union-attr]
+  File "A:\DEV\test_tasks\kerka_bot\venv\lib\site-packages\aiohttp\streams.py", line 616, in read
+    await self._waiter
+aiohttp.client_exceptions.ClientOSError: [WinError 1236] Подключение к сети было разорвано локальной системой
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "A:\DEV\test_tasks\kerka_bot\venv\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 381, in start_polling
+    updates = await self.bot.get_updates(
+  File "A:\DEV\test_tasks\kerka_bot\venv\lib\site-packages\aiogram\bot\bot.py", line 110, in get_updates
+    result = await self.request(api.Methods.GET_UPDATES, payload)
+  File "A:\DEV\test_tasks\kerka_bot\venv\lib\site-packages\aiogram\bot\base.py", line 236, in request
+    return await api.make_request(await self.get_session(), self.server, self.__token, method, data, files,
+  File "A:\DEV\test_tasks\kerka_bot\venv\lib\site-packages\aiogram\bot\api.py", line 142, in make_request
+    raise exceptions.NetworkError(f"aiohttp client throws an error: {e.__class__.__name__}: {e}")
+aiogram.utils.exceptions.NetworkError: Aiohttp client throws an error: ClientOSError: [WinError 1236] Подключение к сети было разорвано локальной системой
+2022-09-15 18:15:21,331 [ERROR] Cause exception while getting updates.
+Traceback (most recent call last):
+  File "A:\DEV\test_tasks\kerka_bot\venv\lib\site-packages\aiohttp\connector.py", line 1154, in _create_direct_connection
+    hosts = await asyncio.shield(host_resolved)
+  File "A:\DEV\test_tasks\kerka_bot\venv\lib\site-packages\aiohttp\connector.py", line 880, in _resolve_host
+    addrs = await self._resolver.resolve(host, port, family=self._family)
+  File "A:\DEV\test_tasks\kerka_bot\venv\lib\site-packages\aiohttp\resolver.py", line 33, in resolve
+    infos = await self._loop.getaddrinfo(
+  File "D:\Users\Verstov\AppData\Local\Programs\Python\Python310\lib\asyncio\base_events.py", line 860, in getaddrinfo
+    return await self.run_in_executor(
+  File "D:\Users\Verstov\AppData\Local\Programs\Python\Python310\lib\concurrent\futures\thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "D:\Users\Verstov\AppData\Local\Programs\Python\Python310\lib\socket.py", line 955, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno 11001] getaddrinfo failed
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "A:\DEV\test_tasks\kerka_bot\venv\lib\site-packages\aiogram\bot\api.py", line 139, in make_request
+    async with session.post(url, data=req, **kwargs) as response:
+  File "A:\DEV\test_tasks\kerka_bot\venv\lib\site-packages\aiohttp\client.py", line 1138, in __aenter__
+    self._resp = await self._coro
+  File "A:\DEV\test_tasks\kerka_bot\venv\lib\site-packages\aiohttp\client.py", line 535, in _request
+    conn = await self._connector.connect(
+  File "A:\DEV\test_tasks\kerka_bot\venv\lib\site-packages\aiohttp\connector.py", line 542, in connect
+    proto = await self._create_connection(req, traces, timeout)
+  File "A:\DEV\test_tasks\kerka_bot\venv\lib\site-packages\aiohttp\connector.py", line 907, in _create_connection
+    _, proto = await self._create_direct_connection(req, traces, timeout)
+  File "A:\DEV\test_tasks\kerka_bot\venv\lib\site-packages\aiohttp\connector.py", line 1166, in _create_direct_connection
+    raise ClientConnectorError(req.connection_key, exc) from exc
+aiohttp.client_exceptions.ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "A:\DEV\test_tasks\kerka_bot\venv\lib\site-packages\aiogram\dispatcher\dispatcher.py", line 381, in start_polling
+    updates = await self.bot.get_updates(
+  File "A:\DEV\test_tasks\kerka_bot\venv\lib\site-packages\aiogram\bot\bot.py", line 110, in get_updates
+    result = await self.request(api.Methods.GET_UPDATES, payload)
+  File "A:\DEV\test_tasks\kerka_bot\venv\lib\site-packages\aiogram\bot\base.py", line 236, in request
+    return await api.make_request(await self.get_session(), self.server, self.__token, method, data, files,
+  File "A:\DEV\test_tasks\kerka_bot\venv\lib\site-packages\aiogram\bot\api.py", line 142, in make_request
+    raise exceptions.NetworkError(f"aiohttp client throws an error: {e.__class__.__name__}: {e}")
+aiogram.utils.exceptions.NetworkError: Aiohttp client throws an error: ClientConnectorError: Cannot connect to host api.telegram.org:443 ssl:default [getaddrinfo failed]
+2022-09-15 18:36:53,851 [WARNING] Goodbye!
