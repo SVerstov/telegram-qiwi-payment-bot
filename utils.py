@@ -4,3 +4,4 @@ def is_number(string):
         return True
     except ValueError:
         return False
+

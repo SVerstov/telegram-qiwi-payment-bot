@@ -1,12 +1,16 @@
 import logging
 
 from db.db_connect import session
-from db.models import User
+from db.models import User, Payments
 from aiogram.types import Message
 
 
 def get_user_by_id(telegram_id: int) -> User:
     return session.query(User).filter_by(telegram_id=telegram_id).first()
+
+
+def get_payment_by_qiwi_id(bill_id: str) -> Payments:
+    return session.query(Payments).filter_by(qiwi_id=bill_id).first()
 
 
 def add_new_user(message: Message) -> User:

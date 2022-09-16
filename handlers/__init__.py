@@ -1,3 +1,2 @@
 def register_handlers():
-    from . import info
-    from . import payments
+    from handlers import info, payments

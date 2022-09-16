@@ -2,6 +2,7 @@ import logging
 import os
 
 from aiogram import Bot
+from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher import Dispatcher
 from aiogram.utils.executor import start_webhook
 
@@ -15,7 +16,8 @@ TOKEN = os.getenv('API_TOKEN')
 WEBHOOK_URL = f"{WEBHOOK_HOST}{WEBHOOK_PATH}"
 
 bot = Bot(token=TOKEN)
-dp = Dispatcher(bot)
+storage = MemoryStorage()
+dp = Dispatcher(bot, storage=storage)
 
 
 def launch_bot():

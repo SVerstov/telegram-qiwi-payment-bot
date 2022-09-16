@@ -2,7 +2,7 @@ import logging
 from pathlib import Path
 
 # Warning! place API_TOKEN into .env file
-DEBUG = False
+DEBUG = True
 USE_POOLING = True  # if true -> bot will use a pooling method instead webhook
 
 # admin settings
