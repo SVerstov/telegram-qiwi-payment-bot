@@ -3,3 +3,5 @@ logs/
 
 __pycache__/
 .idea/
+temp.py
+sqlite3.db

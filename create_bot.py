@@ -6,26 +6,21 @@ from aiogram.dispatcher import Dispatcher
 from aiogram.utils.executor import start_webhook
 
 from dotenv import load_dotenv
+
+from settings import WEBHOOK_HOST, WEBHOOK_PATH, WEBAPP_HOST, USE_POOLING, DEBUG
 load_dotenv()
 
 TOKEN = os.getenv('API_TOKEN')
 
-WEBHOOK_HOST = os.getenv('WEBHOOK_HOST')
-WEBHOOK_PATH = os.getenv('WEBHOOK_PATH')
 WEBHOOK_URL = f"{WEBHOOK_HOST}{WEBHOOK_PATH}"
-
-WEBAPP_HOST = os.getenv('WEBAPP_HOST')
-WEBAPP_PORT = os.getenv('WEBAPP_PORT')
-DEBUG = os.getenv('DEBUG') == 'True'
 
 bot = Bot(token=TOKEN)
 dp = Dispatcher(bot)
 
 
 def launch_bot():
-    if DEBUG:
+    if USE_POOLING:
         from aiogram.utils import executor
-        print('Start bot in debug mode')  # todo переделать в лог
         executor.start_polling(dp)
     else:
         start_webhook(
@@ -35,8 +30,11 @@ def launch_bot():
             on_shutdown=on_shutdown,
             skip_updates=True,
             host=WEBAPP_HOST,
-            port=WEBAPP_PORT,
+            port=5000,
         )
+
+    if DEBUG:
+        logging.warning('Starting bot in debug mode')
 
 
 async def on_startup(dp):
