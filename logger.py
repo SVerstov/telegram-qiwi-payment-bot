@@ -1,7 +1,7 @@
 import logging
 from pathlib import Path
 from typing import Literal
-from settings import info_log_file, warnings_log_file, console_log_level, log_format
+from settings import console_log_level, log_format, logs_dir
 
 
 def get_logger_handler(log_file: Path = None,
@@ -20,11 +20,19 @@ def get_logger_handler(log_file: Path = None,
     return handler
 
 
+
+
 def setup_logger():
-    info_handler = get_logger_handler(log_file=info_log_file, level=logging.INFO)
-    warning_handler = get_logger_handler(log_file=warnings_log_file, level=logging.WARNING)
+    _check_log_dir()
+    info_handler = get_logger_handler(log_file=Path(logs_dir,'info.log'), level=logging.INFO)
+    warning_handler = get_logger_handler(log_file=Path(logs_dir,'warnings.log'), level=logging.WARNING)
     console_handler = get_logger_handler(console_handler=True, level=console_log_level)
 
     logging.basicConfig(level=logging.DEBUG, format=log_format, handlers=[info_handler,
                                                                           warning_handler,
                                                                           console_handler])
+
+
+def _check_log_dir():
+    if not logs_dir.is_dir():
+        Path.mkdir(logs_dir)

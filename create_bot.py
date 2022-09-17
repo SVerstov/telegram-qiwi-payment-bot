@@ -23,7 +23,7 @@ dp = Dispatcher(bot, storage=storage)
 def launch_bot():
     if USE_POOLING:
         from aiogram.utils import executor
-        executor.start_polling(dp)
+        executor.start_polling(dp, on_startup=on_startup)
     else:
         start_webhook(
             dispatcher=dp,
@@ -35,12 +35,14 @@ def launch_bot():
             port=5000,
         )
 
-    if DEBUG:
-        logging.warning('Starting bot in debug mode')
+
 
 
 async def on_startup(dp):
-    await bot.set_webhook(WEBHOOK_URL)
+    if DEBUG:
+        logging.warning('Starting bot in debug mode')
+    if not USE_POOLING:
+        await bot.set_webhook(WEBHOOK_URL)
 
 
 async def on_shutdown(dp):

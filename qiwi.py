@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 from pyqiwip2p import AioQiwiP2P
 from pyqiwip2p.p2p_types import QiwiCustomer, QiwiDatetime, Bill
 
-from db.db_connect import session
+from db.db_connect import db_session
 from db.db_utils import get_user_by_id, get_payment_by_qiwi_id
 from db.models import Payments
 
@@ -23,8 +23,8 @@ async def create_bill(telegram_id: int, amount: int) -> Bill:
 
 def _save_payment_into_db(telegram_id: int, amount: int, qiwi_id: str, ) -> None:
     new_payment = Payments(telegram_id=telegram_id, qiwi_id=qiwi_id, amount=amount)
-    session.add(new_payment)
-    session.commit()
+    db_session.add(new_payment)
+    db_session.commit()
     logging.info(f'Создан новый счет {new_payment}')
 
 
@@ -45,6 +45,6 @@ def increase_user_balance(telegram_id: int, bill_id: str) -> balance:
     if payment.telegram_id == user.telegram_id and payment.is_completed is False:
         user.balance += payment.amount
         payment.is_completed = True
-        session.commit()
+        db_session.commit()
         logging.info(f'{user} зачислено {payment.amount}. Баланс={user.balance}')
     return user.balance

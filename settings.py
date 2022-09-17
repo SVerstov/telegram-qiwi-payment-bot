@@ -1,12 +1,20 @@
+"""
+SettingModule
+Warning! place api tokens into .env file
+"""
+import os
 import logging
 from pathlib import Path
+from dotenv import load_dotenv
 
-# Warning! place API_TOKEN into .env file
+load_dotenv()
+
+
 DEBUG = True
 USE_POOLING = True  # if true -> bot will use a pooling method instead webhook
 
 # admin settings
-admins = ('leshm',)  # username or telegram_id
+ADMINS = (403196518,)  # telegram_id's
 
 # webhook settings
 WEBHOOK_HOST = 'https://yourdomain.com'
@@ -15,19 +23,13 @@ WEBAPP_HOST = 'localhost'
 
 # logger settings
 log_format = r"%(asctime)s [%(levelname)s] %(message)s"
-info_log_file = Path('logs/info.log')
-warnings_log_file = Path('logs/warnings.log')
+logs_dir = Path('logs')
 console_log_level = logging.WARNING
-
-# billing
-lifetime = 5
 
 # DB settings
 POSTGRES_ENGINE = 'psycopg2'
-POSTGRES_DB = 'dbname'
-POSTGRES_USER = 'user'
-POSTGRES_PASSWORD = 'hardpass'
-POSTGRES_HOST = 'db'
-POSTGRES_PORT = 5432
+POSTGRES_DB = os.getenv('POSTGRES_DB')
+POSTGRES_USER = os.getenv('POSTGRES_USER')
+POSTGRES_PASSWORD = os.getenv('POSTGRES_PASSWORD')
 
-POSTGRES_ENGINE = f'postgresql+{POSTGRES_ENGINE}://{POSTGRES_USER}:{POSTGRES_PASSWORD}@localhost:{POSTGRES_PORT}/{POSTGRES_DB}'
+POSTGRES_ENGINE = f'postgresql+{POSTGRES_ENGINE}://{POSTGRES_USER}:{POSTGRES_PASSWORD}@localhost:5432/{POSTGRES_DB}'
