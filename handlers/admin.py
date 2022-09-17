@@ -8,7 +8,7 @@ from aiogram.dispatcher import FSMContext
 from create_bot import dp, bot
 from aiogram import types
 
-from db.db_utils import get_or_create_user, get_all_users, get_user_by_id, add_value_to_balance, block_user
+from db.db_utils import get_or_create_user, get_all_users, get_user_by_id, add_value_to_balance, block_unblock_user
 from keyboard.admin_kb import admin_kb, AdminAction
 from utils import validate_admin, get_logs_list, make_balance_info, is_number
 
@@ -29,13 +29,13 @@ async def show_admin_panel(message: types.Message):
         else:
             await message.answer(f"Доступ запрещён!\n")
         get_or_create_user(message)
-    
+
 
 @dp.callback_query_handler(text=AdminAction.get_logs, state=AdminState.states)
 async def get_logs(callback: types.CallbackQuery, state: FSMContext):
     chat_id = callback.from_user.id
-
     log_list = get_logs_list()
+    await bot.send_message(chat_id, 'Выгружаю логи...')
     for log in log_list:
         await bot.send_document(chat_id, open(log, 'rb'))
     await callback.answer()
@@ -108,7 +108,7 @@ async def block_user_enter_id(message: types.Message, state: FSMContext):
     if not user:
         msg = 'Пользователь не найден'
     else:
-        msg = block_user(user)
+        msg = block_unblock_user(user)
 
     await bot.send_message(chat_id, msg)
     await AdminState.admin_panel_allowed.set()

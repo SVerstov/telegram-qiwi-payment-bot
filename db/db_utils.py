@@ -3,6 +3,7 @@ import logging
 from db.db_connect import db_session
 from db.models import User, Payments
 from aiogram.types import Message
+from db import blacklist
 
 
 def get_user_by_id(telegram_id: int) -> User:
@@ -48,12 +49,26 @@ def add_value_to_balance(user: User, value: int) -> balance:
 log_msg = str
 
 
-def block_user(user: User) -> log_msg:
+def block_unblock_user(user: User) -> log_msg:
     user.is_blocked = not user.is_blocked
     if user.is_blocked:
         log_msg = f'{user} Забанен'
+        blacklist.add(user.telegram_id)
     else:
         log_msg = f'{user} Разбанен'
+        try:
+            blacklist.remove(user.telegram_id)
+        except KeyError:
+            update_blacklist()
+
     db_session.commit()
     logging.info(log_msg)
     return log_msg
+
+
+def update_blacklist():
+    blacklist.clear()
+    block_users = db_session.query(User).filter(User.is_blocked is True).all()
+    if block_users:
+        for user in block_users:
+            blacklist.add(user.telegram_id)
