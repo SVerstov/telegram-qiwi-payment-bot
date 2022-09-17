@@ -18,7 +18,7 @@ class User(Base):
         return f"<User {user}>"
 
     def __str__(self):
-        user = self.username if self.username else self.telegram_id
+        user = f'{self.username} id={self.telegram_id}' if self.username else self.telegram_id
         return f'Пользователь {user}'
 
 

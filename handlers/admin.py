@@ -1,0 +1,1 @@
+# bot.restrict_chat_member(chat_id, user_id, can_send_messages=False)
