@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-DEBUG = False  # debug mode use sqlite instead postgres
+DEBUG = True  # debug mode use sqlite instead postgres
 USE_POOLING = True  # if true -> bot will use a pooling method instead webhook
 
 # admin settings

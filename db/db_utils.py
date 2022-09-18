@@ -86,7 +86,7 @@ def update_blacklist():
 
 
 def make_balance_info(users: list[User]) -> str:
-    info = 'Telegram id / username / balance'
+    info = '<b>Telegram id / username / balance</b>\n'
     for user in users:
         info += f'\n{user.telegram_id} / {user.username} / {user.balance}'
     return info

@@ -45,7 +45,7 @@ async def get_balance(callback: types.CallbackQuery, state: FSMContext):
     chat_id = callback.from_user.id
     users = get_all_users()
     msg = make_balance_info(users)
-    await bot.send_message(chat_id, msg)
+    await bot.send_message(chat_id, msg,)
     await callback.answer()
     await AdminState.admin_panel_allowed.set()
 
@@ -53,7 +53,6 @@ async def get_balance(callback: types.CallbackQuery, state: FSMContext):
 @dp.callback_query_handler(text=AdminAction.change_balance, state=AdminState.states)
 async def pre_change_balance(callback: types.CallbackQuery, state: FSMContext):
     chat_id = callback.from_user.id
-    #TODO вывод списка забаненых пользователей
     await bot.send_message(chat_id, 'Введите id пользователя, которому вы хотите поменять баланс:')
     await AdminState.changing_balance_wait_id.set()
     await callback.answer()
@@ -71,7 +70,7 @@ async def change_balance_enter_id(message: types.Message, state: FSMContext):
         await AdminState.changing_balance_wait_value.set()
         await state.update_data(editable_user_id=editable_user.telegram_id)
     else:
-        await bot.send_message(chat_id, 'Введите число, на которое будет изменён баланс:')
+        await bot.send_message(chat_id, 'Пользователь не найден!')
 
 
 @dp.message_handler(state=AdminState.changing_balance_wait_value)
@@ -113,9 +112,9 @@ async def block_user_cmd(message: types.Message, state: FSMContext):
         block_unblock_func = unblock_user
 
     user_id = message.text.lstrip('/block_').lstrip('/unblock_')
-    try:
+    if is_number(user_id):
         user_id = int(user_id)
-    except ValueError:
+    else:
         await message.answer('Ошибка в id пользователя')
         return
     user = get_user_by_id(user_id)

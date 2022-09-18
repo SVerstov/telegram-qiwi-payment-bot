@@ -1,5 +1,6 @@
 import logging
 import os
+import types
 
 from aiogram import Bot
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
@@ -17,6 +18,7 @@ TOKEN = os.getenv('API_TOKEN')
 WEBHOOK_URL = f"{WEBHOOK_HOST}{WEBHOOK_PATH}"
 
 bot = Bot(token=TOKEN)
+bot.parse_mode = 'HTML'
 storage = MemoryStorage()
 dp = Dispatcher(bot, storage=storage)
 dp.middleware.setup(BlockUserMiddleware())

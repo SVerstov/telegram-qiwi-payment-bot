@@ -14,7 +14,7 @@ class PaymentsState(StatesGroup):
     enter_value = State()
 
 
-@dp.callback_query_handler(text='new_payment')
+@dp.callback_query_handler(text='new_payment', state='*')
 async def new_payment(callback_query: types.CallbackQuery):
     chat_id = callback_query.from_user.id
     await bot.send_message(chat_id, 'Введите сумму, на которую вы хотите пополнить баланс:')
