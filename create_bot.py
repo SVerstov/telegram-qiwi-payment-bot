@@ -8,6 +8,7 @@ from aiogram.utils.executor import start_webhook
 
 from dotenv import load_dotenv
 
+from middlewares.block_user import BlockUserMiddleware
 from settings import WEBHOOK_HOST, WEBHOOK_PATH, WEBAPP_HOST, USE_POOLING, DEBUG
 load_dotenv()
 
@@ -18,7 +19,7 @@ WEBHOOK_URL = f"{WEBHOOK_HOST}{WEBHOOK_PATH}"
 bot = Bot(token=TOKEN)
 storage = MemoryStorage()
 dp = Dispatcher(bot, storage=storage)
-
+dp.middleware.setup(BlockUserMiddleware())
 
 def launch_bot():
     if USE_POOLING:

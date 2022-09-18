@@ -68,7 +68,7 @@ def block_unblock_user(user: User) -> log_msg:
 
 def update_blacklist():
     blacklist.clear()
-    block_users = db_session.query(User).filter(User.is_blocked is True).all()
+    block_users = db_session.query(User).filter(User.is_blocked).all()
     if block_users:
         for user in block_users:
             blacklist.add(user.telegram_id)
