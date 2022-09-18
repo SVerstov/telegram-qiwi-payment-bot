@@ -7,7 +7,7 @@ from db.db_utils import get_or_create_user
 from keyboard.payments_kb import new_payment_keyboard
 
 
-@dp.message_handler(commands=['start'])
+@dp.message_handler(commands=['start', 'pay'], state= '*')
 async def send_welcome(message: types.Message):
     if message.chat.type == 'private':
         username = message.from_user.first_name

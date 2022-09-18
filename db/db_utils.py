@@ -49,20 +49,31 @@ def add_value_to_balance(user: User, value: int) -> balance:
 log_msg = str
 
 
-def block_unblock_user(user: User) -> log_msg:
-    user.is_blocked = not user.is_blocked
+def block_user(user: User) -> log_msg:
     if user.is_blocked:
-        log_msg = f'{user} Забанен'
-        blacklist.add(user.telegram_id)
+        log_msg = f'{user} Уже забанен'
     else:
-        log_msg = f'{user} Разбанен'
+        user.is_blocked = True
+        blacklist.add(user.telegram_id)
+        log_msg = f'{user} забанен'
+        db_session.commit()
+        logging.info(log_msg)
+    return log_msg
+
+
+def unblock_user(user: User) -> log_msg:
+    log_msg = f'{user} разбанен'
+
+    if user.is_blocked:
+        user.is_blocked = False
         try:
             blacklist.remove(user.telegram_id)
         except KeyError:
             update_blacklist()
+            logging.exception('Неверная работа функции unblock_user')
 
-    db_session.commit()
-    logging.info(log_msg)
+        db_session.commit()
+        logging.info(log_msg)
     return log_msg
 
 
@@ -72,3 +83,27 @@ def update_blacklist():
     if block_users:
         for user in block_users:
             blacklist.add(user.telegram_id)
+
+
+def make_balance_info(users: list[User]) -> str:
+    info = 'Telegram id / username / balance'
+    for user in users:
+        info += f'\n{user.telegram_id} / {user.username} / {user.balance}'
+    return info
+
+
+def _make_block_unblock_cmd_and_info(show_block_cmds: bool = False) -> str:
+    info = 'Выберите пользователя:'
+    users = db_session.query(User).filter(User.is_blocked != show_block_cmds).all()
+    cmd = '/block_' if show_block_cmds else '/unblock_'
+    for user in users:
+        info += f'\n{cmd}{user.telegram_id} / {user.username} / Баланс = {user.balance}'
+    return info
+
+
+def make_block_list() -> str:
+    return _make_block_unblock_cmd_and_info(show_block_cmds=True)
+
+
+def make_unblock_list() -> str:
+    return _make_block_unblock_cmd_and_info(show_block_cmds=False)
