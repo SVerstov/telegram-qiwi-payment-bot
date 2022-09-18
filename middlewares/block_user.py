@@ -4,6 +4,7 @@ from aiogram.types import Update
 
 from db import blacklist
 
+
 class BlockUserMiddleware(BaseMiddleware):
     async def on_pre_process_update(self, update: Update, data: dict):
         user_id = None

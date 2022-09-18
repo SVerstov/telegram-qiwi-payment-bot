@@ -1,5 +1,3 @@
-from enum import Enum
-
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 admin_kb = InlineKeyboardMarkup(row_width=2)
