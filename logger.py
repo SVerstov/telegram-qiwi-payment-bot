@@ -6,7 +6,7 @@ from settings import console_log_level, log_format, logs_dir
 
 def get_logger_handler(log_file: Path = None,
                        console_handler=False,
-                       level: Literal[10, 20, 30, 40, 50] = logging.INFO
+                       level: int = logging.INFO
                        ) -> logging.FileHandler | logging.StreamHandler:
     formatter = logging.Formatter(log_format)
 
@@ -20,12 +20,10 @@ def get_logger_handler(log_file: Path = None,
     return handler
 
 
-
-
 def setup_logger():
     _check_log_dir()
-    info_handler = get_logger_handler(log_file=Path(logs_dir,'info.log'), level=logging.INFO)
-    warning_handler = get_logger_handler(log_file=Path(logs_dir,'warnings.log'), level=logging.WARNING)
+    info_handler = get_logger_handler(log_file=Path(logs_dir, 'info.log'), level=logging.INFO)
+    warning_handler = get_logger_handler(log_file=Path(logs_dir, 'warnings.log'), level=logging.WARNING)
     console_handler = get_logger_handler(console_handler=True, level=console_log_level)
 
     logging.basicConfig(level=logging.DEBUG, format=log_format, handlers=[info_handler,
